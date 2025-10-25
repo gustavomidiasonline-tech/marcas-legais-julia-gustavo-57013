@@ -37,15 +37,15 @@ const SocialProofNotification = () => {
       }, 5000);
     };
 
-    // Primeira notificação após 5 segundos
+    // Primeira notificação após 15 segundos
     const initialTimer = setTimeout(() => {
       showNotification();
-    }, 5000);
+    }, 15000);
 
-    // Notificações subsequentes a cada 10 segundos
+    // Notificações subsequentes a cada 15 segundos
     const interval = setInterval(() => {
       showNotification();
-    }, 10000);
+    }, 15000);
 
     return () => {
       clearTimeout(initialTimer);
