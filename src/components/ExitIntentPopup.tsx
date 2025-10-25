@@ -61,44 +61,36 @@ const ExitIntentPopup = () => {
     };
   }, [canShow, hasShown, isOpen]);
 
-  // Mobile exit intent (scroll up + time based)
+  // Mobile exit intent (3 scrolls detection)
   useEffect(() => {
     if (!canShow || hasShown || !isMobile()) return;
 
-    let scrollUpCount = 0;
+    let scrollCount = 0;
     let timeoutId: NodeJS.Timeout;
-    let lastScrollTime = Date.now();
+    let lastScrollY = 0;
+    let scrollThreshold = 50; // Minimum scroll distance to count
 
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      const currentTime = Date.now();
-
-      // Detect scroll up (user trying to go back to top/exit)
-      if (currentScrollY < lastScrollY && currentScrollY > 50) {
-        // Only count if scroll happened within 500ms (rapid scroll up)
-        if (currentTime - lastScrollTime < 500) {
-          scrollUpCount++;
-        } else {
-          scrollUpCount = 1; // Reset if too much time passed
-        }
+      
+      // Only count if scrolled more than threshold
+      if (Math.abs(currentScrollY - lastScrollY) > scrollThreshold) {
+        scrollCount++;
+        lastScrollY = currentScrollY;
         
-        lastScrollTime = currentTime;
+        console.log(`Mobile scroll count: ${scrollCount}/3`);
         
-        // If user scrolled up 2 times rapidly, show popup
-        if (scrollUpCount >= 2 && !hasShown && !isOpen) {
+        // Show popup after 3 scrolls
+        if (scrollCount >= 3 && !hasShown && !isOpen) {
+          console.log("Mobile popup triggered by 3 scrolls");
           setIsOpen(true);
           setHasShown(true);
           sessionStorage.setItem("exitPopupShown", "true");
         }
-      } else {
-        // Reset count if scrolling down
-        scrollUpCount = 0;
       }
-
-      setLastScrollY(currentScrollY);
     };
 
-    // Show after 15 seconds on mobile if not shown yet (reduced from 20)
+    // Fallback: Show after 20 seconds on mobile if not shown yet
     timeoutId = setTimeout(() => {
       if (!hasShown && !isOpen) {
         console.log("Mobile popup triggered by timeout");
@@ -106,7 +98,7 @@ const ExitIntentPopup = () => {
         setHasShown(true);
         sessionStorage.setItem("exitPopupShown", "true");
       }
-    }, 15000);
+    }, 20000);
 
     window.addEventListener("scroll", handleScroll, { passive: true });
 
@@ -114,7 +106,7 @@ const ExitIntentPopup = () => {
       window.removeEventListener("scroll", handleScroll);
       clearTimeout(timeoutId);
     };
-  }, [canShow, hasShown, isOpen, lastScrollY]);
+  }, [canShow, hasShown, isOpen]);
 
   const handleWhatsAppClick = () => {
     window.open(whatsappLink, "_blank");
