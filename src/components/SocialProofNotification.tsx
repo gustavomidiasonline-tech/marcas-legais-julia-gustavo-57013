@@ -25,33 +25,36 @@ const SocialProofNotification = () => {
   const [currentClient, setCurrentClient] = useState("");
 
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
-    let intervalId: NodeJS.Timeout;
-
+    console.log('🔔 SocialProofNotification component mounted');
+    
     const showNotification = () => {
       const randomClient = clientNames[Math.floor(Math.random() * clientNames.length)];
       setCurrentClient(randomClient);
       setIsVisible(true);
+      console.log('✅ Showing notification for:', randomClient);
 
-      timeoutId = setTimeout(() => {
+      setTimeout(() => {
         setIsVisible(false);
-      }, 5000);
+        console.log('❌ Hiding notification');
+      }, 5000); // Visível por 5 segundos
     };
 
-    // Primeira notificação após 15 segundos
-    const initialDelay = setTimeout(() => {
+    // Primeira notificação após 5 segundos (reduzido para teste)
+    const initialTimer = setTimeout(() => {
+      console.log('⏰ First notification triggered');
       showNotification();
-      
-      // Após a primeira notificação, inicia o intervalo
-      intervalId = setInterval(() => {
-        showNotification();
-      }, 20000); // 15s visível + 5s de pausa = 20s total
+    }, 5000);
+
+    // Notificações subsequentes a cada 15 segundos
+    const interval = setInterval(() => {
+      console.log('⏰ Interval notification triggered');
+      showNotification();
     }, 15000);
 
     return () => {
-      clearTimeout(initialDelay);
-      clearTimeout(timeoutId);
-      if (intervalId) clearInterval(intervalId);
+      console.log('🔔 SocialProofNotification component unmounted');
+      clearTimeout(initialTimer);
+      clearInterval(interval);
     };
   }, []);
 
