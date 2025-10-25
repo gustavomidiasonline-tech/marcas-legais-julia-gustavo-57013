@@ -9,6 +9,7 @@ import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
 import ExitIntentPopup from "@/components/ExitIntentPopup";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
+import SocialProofNotification from "@/components/SocialProofNotification";
 
 const Index = () => {
   return (
@@ -24,6 +25,7 @@ const Index = () => {
       <Footer />
       <ExitIntentPopup />
       <FloatingWhatsApp />
+      <SocialProofNotification />
     </main>
   );
 };

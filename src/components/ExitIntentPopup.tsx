@@ -20,7 +20,9 @@ const ExitIntentPopup = () => {
   const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
 
   const isMobile = () => {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+           window.innerWidth < 768 || 
+           ('ontouchstart' in window);
   };
 
   useEffect(() => {
@@ -65,33 +67,46 @@ const ExitIntentPopup = () => {
 
     let scrollUpCount = 0;
     let timeoutId: NodeJS.Timeout;
+    let lastScrollTime = Date.now();
 
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
+      const currentTime = Date.now();
 
       // Detect scroll up (user trying to go back to top/exit)
-      if (currentScrollY < lastScrollY && currentScrollY > 100) {
-        scrollUpCount++;
+      if (currentScrollY < lastScrollY && currentScrollY > 50) {
+        // Only count if scroll happened within 500ms (rapid scroll up)
+        if (currentTime - lastScrollTime < 500) {
+          scrollUpCount++;
+        } else {
+          scrollUpCount = 1; // Reset if too much time passed
+        }
         
-        // If user scrolled up 3 times, show popup
-        if (scrollUpCount >= 3 && !hasShown && !isOpen) {
+        lastScrollTime = currentTime;
+        
+        // If user scrolled up 2 times rapidly, show popup
+        if (scrollUpCount >= 2 && !hasShown && !isOpen) {
           setIsOpen(true);
           setHasShown(true);
           sessionStorage.setItem("exitPopupShown", "true");
         }
+      } else {
+        // Reset count if scrolling down
+        scrollUpCount = 0;
       }
 
       setLastScrollY(currentScrollY);
     };
 
-    // Also show after 20 seconds on mobile if not shown yet
+    // Show after 15 seconds on mobile if not shown yet (reduced from 20)
     timeoutId = setTimeout(() => {
       if (!hasShown && !isOpen) {
+        console.log("Mobile popup triggered by timeout");
         setIsOpen(true);
         setHasShown(true);
         sessionStorage.setItem("exitPopupShown", "true");
       }
-    }, 20000);
+    }, 15000);
 
     window.addEventListener("scroll", handleScroll, { passive: true });
 
@@ -108,9 +123,9 @@ const ExitIntentPopup = () => {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="sm:max-w-[500px] p-0 overflow-hidden border-2 border-primary">
+      <DialogContent className="sm:max-w-[500px] max-w-[95vw] p-0 overflow-hidden border-2 border-primary max-h-[90vh] overflow-y-auto">
         {/* Header with gradient */}
-        <div className="bg-gradient-primary text-white p-6 sm:p-8 text-center relative overflow-hidden">
+        <div className="bg-gradient-primary text-white p-4 sm:p-6 md:p-8 text-center relative overflow-hidden">
           <div className="absolute inset-0 opacity-10">
             <div className="absolute inset-0" style={{
               backgroundImage: 'url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="1"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
