@@ -61,8 +61,8 @@ const SocialProofNotification = () => {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-24 left-4 right-4 sm:bottom-6 sm:left-auto sm:right-6 z-[100] animate-fade-in">
-      <div className="bg-card border-2 border-accent/20 rounded-lg shadow-xl p-3 sm:p-4 w-full sm:max-w-sm backdrop-blur-sm">
+    <div className="fixed bottom-24 left-4 right-4 sm:bottom-6 sm:left-auto sm:right-6 z-[9999] animate-fade-in">
+      <div className="bg-card border-2 border-accent/20 rounded-lg shadow-2xl p-3 sm:p-4 w-full sm:max-w-sm backdrop-blur-md">
         <div className="flex items-start gap-2 sm:gap-3">
           <div className="flex-shrink-0">
             <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-accent/10 flex items-center justify-center">
