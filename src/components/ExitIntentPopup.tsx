@@ -33,7 +33,7 @@ const ExitIntentPopup = () => {
       ("ontouchstart" in window && navigator.maxTouchPoints > 0)
     : false;
 
-  // --- Delay para evitar popup instantâneo ---
+  // --- Delay inicial para ativar popup ---
   useEffect(() => {
     if (!isClient) return;
     try {
@@ -72,7 +72,7 @@ const ExitIntentPopup = () => {
 
     const scrollThreshold = 80;
     lastScrollY.current = window.scrollY;
-    const target = isIframe ? document : window; // se dentro de iframe, escuta o document
+    const target = isIframe ? document : window;
 
     const handleScroll = () => {
       const currentY = window.scrollY;
@@ -87,12 +87,12 @@ const ExitIntentPopup = () => {
       }
     };
 
-    // Fallback de tempo
+    // Fallback de tempo (12 segundos)
     timeoutRef.current = setTimeout(() => {
       if (!isOpen && !hasShown) {
-        openPopup("timeout 20s");
+        openPopup("timeout 12s");
       }
-    }, 20000);
+    }, 12000);
 
     target.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
@@ -101,7 +101,7 @@ const ExitIntentPopup = () => {
     };
   }, [isClient, canShow, hasShown, isOpen, isMobile, isIframe]);
 
-  // --- Função central de abertura ---
+  // --- Abrir popup ---
   const openPopup = (trigger) => {
     console.log("🚀 Popup aberto via:", trigger);
     setIsOpen(true);
@@ -113,7 +113,7 @@ const ExitIntentPopup = () => {
     }
   };
 
-  // --- Botão WhatsApp ---
+  // --- Ação WhatsApp ---
   const handleWhatsAppClick = () => {
     window.open(whatsappLink, "_blank");
     setIsOpen(false);
