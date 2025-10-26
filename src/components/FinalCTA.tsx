@@ -4,7 +4,7 @@ import iconSecurity from "@/assets/icon-security.png";
 
 const FinalCTA = () => {
   const whatsappNumber = "5511912200912";
-  const whatsappMessage = encodeURIComponent("Olá! Quero saber mais sobre como registrar minha marca.");
+  const whatsappMessage = encodeURIComponent("Olá! Quero fazer a consulta gratuita para registrar minha marca.");
   const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
 
   return (
