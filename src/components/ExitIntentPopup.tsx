@@ -1,3 +1,4 @@
+"use client";
 // components/BulletproofPopup.jsx
 import { useEffect, useRef, useState } from "react";
 
