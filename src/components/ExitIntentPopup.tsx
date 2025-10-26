@@ -105,16 +105,10 @@ const ExitIntentPopup = () => {
     try {
       sessionStorage.setItem("exitPopupShown", "true");
     } catch {}
-
-    // 🔹 Rastreamento Meta Pixel e GA4
-    if (typeof fbq !== "undefined") fbq("trackCustom", "PopupShown");
-    if (typeof gtag !== "undefined") gtag("event", "popup_shown", { method: trigger });
   };
 
   // Clique WhatsApp
   const handleWhatsAppClick = () => {
-    if (typeof fbq !== "undefined") fbq("track", "Lead");
-    if (typeof gtag !== "undefined") gtag("event", "whatsapp_click", { category: "Popup" });
     window.open(whatsappLink, "_blank");
     setIsOpen(false);
   };

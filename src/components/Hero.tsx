@@ -69,7 +69,7 @@ const Hero = () => {
                 variant="whatsapp" 
                 size="default"
                 asChild
-                className="group w-full sm:w-auto text-xs sm:text-sm shadow-lg hover:shadow-xl py-5 sm:py-6"
+                className="group w-full sm:w-auto text-xs sm:text-sm shadow-lg hover:shadow-xl py-3 sm:py-4"
               >
                 <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2">
                   <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
@@ -82,7 +82,7 @@ const Hero = () => {
               {/* Urgency Badge */}
               <div className="bg-accent/20 border border-accent/30 rounded-lg px-3 py-1.5 backdrop-blur-sm text-center">
                 <p className="text-white text-xs font-medium">
-                  ⚡ <strong>Atenção:</strong> Restam poucas vagas nesta semana
+                  ❗ <strong>ATENÇÃO:</strong> Restam poucas vagas nesta semana
                 </p>
               </div>
             </div>
