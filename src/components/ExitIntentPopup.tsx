@@ -24,7 +24,7 @@ const ExitIntentPopup = () => {
   );
   const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
 
-  // --- Detectar mobile / iframe / client ---
+  // Detecta ambiente
   const isClient = typeof window !== "undefined";
   const isIframe = isClient && window.self !== window.top;
   const isMobile = isClient
@@ -33,7 +33,7 @@ const ExitIntentPopup = () => {
       ("ontouchstart" in window && navigator.maxTouchPoints > 0)
     : false;
 
-  // --- Delay inicial para ativar popup ---
+  // Delay curto para ativar popup
   useEffect(() => {
     if (!isClient) return;
     try {
@@ -42,23 +42,19 @@ const ExitIntentPopup = () => {
         setHasShown(true);
         return;
       }
-    } catch (e) {
-      console.warn("sessionStorage bloqueado:", e);
-    }
+    } catch {}
 
-    const timer = setTimeout(() => {
-      setCanShow(true);
-    }, 3000);
+    const timer = setTimeout(() => setCanShow(true), 1000); // 1 segundo
     return () => clearTimeout(timer);
   }, [isClient]);
 
-  // --- Exit Intent Desktop ---
+  // Desktop: sair do topo
   useEffect(() => {
     if (!isClient || !canShow || hasShown || isMobile) return;
 
     const handleMouseLeave = (e) => {
       if (e.clientY <= 10 && !isOpen && !hasShown) {
-        openPopup("mouse leave");
+        openPopup("mouse_leave");
       }
     };
 
@@ -66,11 +62,11 @@ const ExitIntentPopup = () => {
     return () => document.removeEventListener("mouseleave", handleMouseLeave);
   }, [isClient, canShow, hasShown, isOpen, isMobile]);
 
-  // --- Exit Intent Mobile ---
+  // Mobile: 2 scrolls + fallback rápido
   useEffect(() => {
     if (!isClient || !canShow || hasShown || !isMobile) return;
 
-    const scrollThreshold = 80;
+    const scrollThreshold = 50;
     lastScrollY.current = window.scrollY;
     const target = isIframe ? document : window;
 
@@ -80,19 +76,19 @@ const ExitIntentPopup = () => {
       if (diff > scrollThreshold) {
         scrollCount.current += 1;
         lastScrollY.current = currentY;
-        console.log(`📱 Scroll ${scrollCount.current}/3`);
-        if (scrollCount.current >= 3 && !isOpen && !hasShown) {
-          openPopup("3 scrolls");
+        console.log(`📱 Scroll ${scrollCount.current}/2`);
+        if (scrollCount.current >= 2 && !isOpen && !hasShown) {
+          openPopup("2_scrolls");
         }
       }
     };
 
-    // Fallback de tempo (12 segundos)
+    // Fallback rápido (8 segundos)
     timeoutRef.current = setTimeout(() => {
       if (!isOpen && !hasShown) {
-        openPopup("timeout 12s");
+        openPopup("timeout_8s");
       }
-    }, 12000);
+    }, 8000);
 
     target.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
@@ -101,20 +97,24 @@ const ExitIntentPopup = () => {
     };
   }, [isClient, canShow, hasShown, isOpen, isMobile, isIframe]);
 
-  // --- Abrir popup ---
+  // Função para abrir popup
   const openPopup = (trigger) => {
     console.log("🚀 Popup aberto via:", trigger);
     setIsOpen(true);
     setHasShown(true);
     try {
       sessionStorage.setItem("exitPopupShown", "true");
-    } catch {
-      /* ignora se storage for bloqueado */
-    }
+    } catch {}
+
+    // 🔹 Rastreamento Meta Pixel e GA4
+    if (typeof fbq !== "undefined") fbq("trackCustom", "PopupShown");
+    if (typeof gtag !== "undefined") gtag("event", "popup_shown", { method: trigger });
   };
 
-  // --- Ação WhatsApp ---
+  // Clique WhatsApp
   const handleWhatsAppClick = () => {
+    if (typeof fbq !== "undefined") fbq("track", "Lead");
+    if (typeof gtag !== "undefined") gtag("event", "whatsapp_click", { category: "Popup" });
     window.open(whatsappLink, "_blank");
     setIsOpen(false);
   };
