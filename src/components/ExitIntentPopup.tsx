@@ -1,207 +1,187 @@
-import { useState, useEffect, useRef } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { AlertCircle, MessageCircle, Shield } from "lucide-react";
+// components/BulletproofPopup.jsx
+import { useEffect, useRef, useState } from "react";
 
-const ExitIntentPopup = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [hasShown, setHasShown] = useState(false);
-  const [canShow, setCanShow] = useState(false);
+export default function BulletproofPopup() {
+  const [open, setOpen] = useState(false);
+  const [armed, setArmed] = useState(false);
+  const [shown, setShown] = useState(false);
 
-  const scrollCount = useRef(0);
-  const lastScrollY = useRef(0);
-  const timeoutRef = useRef(null);
+  const openedRef = useRef(false);
+  const scrollTriggeredRef = useRef(false);
+  const enableTimer = useRef(null);
+  const fallbackTimer = useRef(null);
+  const lastY = useRef(0);
 
-  const whatsappNumber = "5511912200912";
-  const whatsappMessage = encodeURIComponent(
-    "Olá! Vi o alerta e não quero perder a oportunidade de proteger minha marca!"
-  );
-  const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
-
-  // Detecta ambiente
   const isClient = typeof window !== "undefined";
-  const isIframe = isClient && window.self !== window.top;
   const isMobile = isClient
     ? /Mobi|Android|iPhone|iPad|iPod|Tablet|Touch/i.test(navigator.userAgent) ||
       window.innerWidth < 1024 ||
       ("ontouchstart" in window && navigator.maxTouchPoints > 0)
     : false;
 
-  // Delay curto para ativar popup
+  // ---------- utils ----------
+  const safeGet = (k, d = null) => {
+    try { return window.localStorage.getItem(k) ?? d; } catch { return d; }
+  };
+  const safeSet = (k, v) => {
+    try { window.localStorage.setItem(k, v); } catch {}
+  };
+
+  const track = (type, payload={}) => {
+    // Meta Pixel
+    if (typeof window !== "undefined" && typeof window.fbq === "function") {
+      if (type === "popup_shown") window.fbq("trackCustom", "PopupShown", payload);
+      if (type === "lead_click") window.fbq("track", "Lead", payload);
+    }
+    // GA4
+    if (typeof window !== "undefined" && typeof window.gtag === "function") {
+      if (type === "popup_shown") window.gtag("event", "popup_shown", payload);
+      if (type === "lead_click") window.gtag("event", "whatsapp_click", { category: "Popup", ...payload });
+    }
+  };
+
+  const openPopup = (reason) => {
+    if (openedRef.current || shown) return;
+    openedRef.current = true;
+    setOpen(true);
+    setShown(true);
+    safeSet("exit_popup_shown_v1", "1");
+    track("popup_shown", { reason });
+    // console.log("[Popup] OPEN via:", reason); // debug opcional
+  };
+
+  // ---------- mount/arm ----------
   useEffect(() => {
     if (!isClient) return;
-    try {
-      const popupShown = sessionStorage.getItem("exitPopupShown");
-      if (popupShown) {
-        setHasShown(true);
-        return;
-      }
-    } catch {}
+    if (safeGet("exit_popup_shown_v1") === "1") { setShown(true); return; }
 
-    const timer = setTimeout(() => setCanShow(true), 1000); // 1 segundo
-    return () => clearTimeout(timer);
+    // Armar depois de 800ms (evita abrir na hora do load)
+    enableTimer.current = setTimeout(() => setArmed(true), 800);
+
+    // Fallback agressivo: abre em 6s se nada disparar
+    fallbackTimer.current = setTimeout(() => {
+      if (!openedRef.current) openPopup("timeout_6s");
+    }, 6000);
+
+    return () => {
+      clearTimeout(enableTimer.current);
+      clearTimeout(fallbackTimer.current);
+    };
   }, [isClient]);
 
-  // Desktop: sair do topo
+  // ---------- desktop: mouse saindo pelo topo ----------
   useEffect(() => {
-    if (!isClient || !canShow || hasShown || isMobile) return;
+    if (!isClient || !armed || shown || isMobile) return;
 
-    const handleMouseLeave = (e) => {
-      if (e.clientY <= 10 && !isOpen && !hasShown) {
-        openPopup("mouse_leave");
-      }
+    const onLeave = (e) => {
+      if (e.clientY <= 10) openPopup("mouse_leave_top");
     };
+    document.addEventListener("mouseleave", onLeave);
+    return () => document.removeEventListener("mouseleave", onLeave);
+  }, [isClient, armed, shown, isMobile]);
 
-    document.addEventListener("mouseleave", handleMouseLeave);
-    return () => document.removeEventListener("mouseleave", handleMouseLeave);
-  }, [isClient, canShow, hasShown, isOpen, isMobile]);
-
-  // Mobile: 2 scrolls + fallback rápido
+  // ---------- mobile: scroll >= 100px OU 2 movimentos ----------
   useEffect(() => {
-    if (!isClient || !canShow || hasShown || !isMobile) return;
+    if (!isClient || !armed || shown || !isMobile) return;
 
-    const scrollThreshold = 50;
-    lastScrollY.current = window.scrollY;
-    const target = isIframe ? document : window;
+    lastY.current = window.scrollY;
+    let moves = 0;
 
     const handleScroll = () => {
-      const currentY = window.scrollY;
-      const diff = Math.abs(currentY - lastScrollY.current);
-      if (diff > scrollThreshold) {
-        scrollCount.current += 1;
-        lastScrollY.current = currentY;
-        console.log(`📱 Scroll ${scrollCount.current}/2`);
-        if (scrollCount.current >= 2 && !isOpen && !hasShown) {
-          openPopup("2_scrolls");
+      const cy = window.scrollY;
+      const diff = Math.abs(cy - lastY.current);
+      if (diff >= 100 && !scrollTriggeredRef.current) {
+        scrollTriggeredRef.current = true;
+        openPopup("scroll_100px");
+        return;
+      }
+      // Contador de dois movimentos significativos (>=60px)
+      if (diff >= 60) {
+        moves += 1;
+        lastY.current = cy;
+        if (moves >= 2 && !openedRef.current) {
+          openPopup("two_scroll_moves");
         }
       }
     };
 
-    // Fallback rápido (8 segundos)
-    timeoutRef.current = setTimeout(() => {
-      if (!isOpen && !hasShown) {
-        openPopup("timeout_8s");
-      }
-    }, 8000);
+    // escuta no document para pegar scroll em wrappers
+    document.addEventListener("scroll", handleScroll, { passive: true });
+    return () => document.removeEventListener("scroll", handleScroll);
+  }, [isClient, armed, shown, isMobile]);
 
-    target.addEventListener("scroll", handleScroll, { passive: true });
-    return () => {
-      target.removeEventListener("scroll", handleScroll);
-      clearTimeout(timeoutRef.current);
-    };
-  }, [isClient, canShow, hasShown, isOpen, isMobile, isIframe]);
+  // ---------- ação: WhatsApp ----------
+  const whatsappNumber = "5511912200912";
+  const whatsappMessage = encodeURIComponent(
+    "Olá! Não quero perder a oportunidade de proteger minha marca!"
+  );
+  const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
 
-  // Função para abrir popup
-  const openPopup = (trigger) => {
-    console.log("🚀 Popup aberto via:", trigger);
-    setIsOpen(true);
-    setHasShown(true);
-    try {
-      sessionStorage.setItem("exitPopupShown", "true");
-    } catch {}
-  };
-
-  // Clique WhatsApp
-  const handleWhatsAppClick = () => {
+  const onWhatsApp = () => {
+    track("lead_click", { origin: "popup" });
     window.open(whatsappLink, "_blank");
-    setIsOpen(false);
+    setOpen(false);
   };
 
+  if (!open) return null;
+
+  // ---------- UI do popup (Tailwind) ----------
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="sm:max-w-[500px] max-w-[95vw] p-0 overflow-hidden border-2 border-primary max-h-[90vh] overflow-y-auto z-[99999]">
-        {/* HEADER */}
-        <div className="bg-gradient-primary text-white p-4 sm:p-6 md:p-8 text-center relative overflow-hidden">
-          <div
-            className="absolute inset-0 opacity-10"
-            style={{
-              backgroundImage:
-                'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
-            }}
-          />
-          <div className="relative z-10">
-            <div className="inline-flex p-3 rounded-full bg-accent/20 backdrop-blur-sm mb-4">
-              <AlertCircle className="w-8 h-8 sm:w-10 sm:h-10 text-accent" />
-            </div>
-            <DialogHeader className="space-y-3">
-              <DialogTitle className="text-2xl sm:text-3xl font-bold text-white">
-                ⚠️ Espere! Você Está Prestes a Perder Sua Marca
-              </DialogTitle>
-              <DialogDescription className="text-base sm:text-lg text-white/90">
-                <strong>ALERTA:</strong> Outras empresas estão tentando registrar marcas semelhantes à sua.
-              </DialogDescription>
-            </DialogHeader>
+    <div
+      id="bulletproof-popup"
+      className="fixed inset-0 z-[999999] flex items-center justify-center"
+      style={{ backgroundColor: "rgba(0,0,0,0.55)" }}
+      onClick={() => setOpen(false)}
+    >
+      <div
+        className="w-[95vw] max-w-[500px] max-h-[90vh] overflow-y-auto rounded-2xl border-2 border-primary bg-white shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-6 text-center relative rounded-t-2xl">
+          <div className="inline-flex p-3 rounded-full bg-white/15 backdrop-blur mb-3">
+            {/* ícone simples */}
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+              <path d="M12 9v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </div>
-        </div>
-
-        {/* CONTEÚDO */}
-        <div className="p-6 sm:p-8 space-y-6">
-          <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg mb-4">
-            <p className="text-sm sm:text-base text-foreground font-bold text-center">
-              🚨 <span className="text-red-600">URGENTE:</span> 3 empresas consultaram marcas similares à sua hoje. Registre a sua marca PRIMEIRO!
-            </p>
-          </div>
-
-          <div className="space-y-4">
-            <div className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
-              <p className="text-sm sm:text-base text-foreground">
-                <strong>Sem registro, você pode perder tudo:</strong> outra empresa pode registrar seu nome e te impedir de usar sua própria marca.
-              </p>
-            </div>
-            <div className="flex items-start gap-3">
-              <AlertCircle className="w-5 h-5 text-red-500 mt-1 flex-shrink-0" />
-              <p className="text-sm sm:text-base text-foreground">
-                <strong>Prejuízo garantido:</strong> você terá que mudar nome, logo, materiais e perderá toda reputação construída.
-              </p>
-            </div>
-            <div className="flex items-start gap-3">
-              <MessageCircle className="w-5 h-5 text-accent mt-1 flex-shrink-0" />
-              <p className="text-sm sm:text-base text-foreground">
-                Converse conosco AGORA e regularize isso ANTES que seja tarde demais.
-              </p>
-            </div>
-          </div>
-
-          <div className="bg-accent/20 p-4 rounded-lg border border-accent/40">
-            <p className="text-xs sm:text-sm text-center font-bold text-foreground">
-              ⚡ <span className="text-accent-foreground">VAGAS LIMITADAS:</span> Apenas 5 vagas para análise gratuita hoje.
-            </p>
-          </div>
-
-          <div className="space-y-3">
-            <Button
-              variant="whatsapp"
-              size="lg"
-              className="w-full group text-sm sm:text-base"
-              onClick={handleWhatsAppClick}
-            >
-              Registrar Minha Marca Agora
-            </Button>
-
-            <Button
-              variant="outline"
-              size="lg"
-              className="w-full text-sm sm:text-base"
-              onClick={() => setIsOpen(false)}
-            >
-              Continuar Navegando
-            </Button>
-          </div>
-
-          <p className="text-xs text-center text-muted-foreground">
-            🔒 Atendimento rápido e confidencial
+          <h3 className="text-2xl font-bold">⚠️ Espere! Proteja sua marca</h3>
+          <p className="text-white/90 mt-1">
+            Outras empresas podem registrar nomes semelhantes. Garanta a sua prioridade.
           </p>
         </div>
-      </DialogContent>
-    </Dialog>
-  );
-};
 
-export default ExitIntentPopup;
+        {/* Body */}
+        <div className="p-6 space-y-4">
+          <div className="bg-red-50 border border-red-200 p-3 rounded">
+            <p className="text-sm font-semibold text-red-700 text-center">
+              🚨 URGENTE: Registre sua marca antes que alguém o faça.
+            </p>
+          </div>
+
+          <ul className="space-y-3 text-[15px] text-gray-800">
+            <li><b>Sem registro</b>, você pode ser impedido de usar o próprio nome.</li>
+            <li><b>Prejuízo certo</b>: troca de logo, materiais e perda de reputação.</li>
+            <li>Fale agora no WhatsApp e resolva isso em minutos.</li>
+          </ul>
+
+          <button
+            onClick={onWhatsApp}
+            className="w-full inline-flex items-center justify-center gap-2 rounded-lg py-3 px-4 font-semibold text-white bg-green-600 hover:bg-green-700 transition"
+          >
+            Registrar Minha Marca Agora
+          </button>
+
+          <button
+            onClick={() => setOpen(false)}
+            className="w-full rounded-lg py-3 px-4 border border-gray-300 text-gray-700 hover:bg-gray-50 transition"
+          >
+            Continuar Navegando
+          </button>
+
+          <p className="text-xs text-center text-gray-500">🔒 Atendimento rápido e confidencial</p>
+        </div>
+      </div>
+    </div>
+  );
+}
