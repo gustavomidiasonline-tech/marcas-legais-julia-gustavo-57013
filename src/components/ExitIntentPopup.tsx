@@ -20,7 +20,7 @@ const ExitIntentPopup = () => {
 
   const whatsappNumber = "5511912200912";
   const whatsappMessage = encodeURIComponent(
-    "Olá! Vi o alerta e não quero perder a oportunidade de proteger minha marca!"
+    "Olá! Não quero perder a oportunidade de proteger minha marca!"
   );
   const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
 

@@ -1,6 +1,6 @@
 const FloatingWhatsApp = () => {
   const whatsappNumber = "5511912200912";
-  const whatsappMessage = encodeURIComponent("Olá! Gostaria de registrar minha marca no INPI.");
+  const whatsappMessage = encodeURIComponent("Olá! Gostaria de registrar minha marca.");
   const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
 
   return (

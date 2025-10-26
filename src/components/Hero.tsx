@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Shield, CheckCircle } from "lucide-react";
+import { Shield, Users, CheckCircle } from "lucide-react";
 import heroImage from "@/assets/hero-brand-protection.jpg";
 
 const Hero = () => {

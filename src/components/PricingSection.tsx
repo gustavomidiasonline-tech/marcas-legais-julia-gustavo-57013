@@ -14,7 +14,7 @@ const benefits = [
 
 const PricingSection = () => {
   const whatsappNumber = "5511912200912";
-  const whatsappMessage = encodeURIComponent("Olá! Quero consultar sobre os planos de registro de marca.");
+  const whatsappMessage = encodeURIComponent("Olá! Quero saber mais sobre os planos de registro de marca.");
   const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
 
   return (

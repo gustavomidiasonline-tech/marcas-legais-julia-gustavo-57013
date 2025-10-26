@@ -39,56 +39,6 @@
     <script src="https://t.contentsquare.net/uxa/2a4622148ffe3.js"></script>
 
   </head>
-<!-- Popup emergencial -->
-<div id="popup-container"></div>
-
-<script>
-(function(){
-  const html = `
-  <div id="exit-popup" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:99999; display:flex; align-items:center; justify-content:center;">
-    <div style="background:#fff; border-radius:12px; max-width:420px; width:90%; padding:24px; text-align:center;">
-      <h2 style="color:#e11d48; font-size:22px; font-weight:700;">⚠️ Espere! Proteja sua Marca</h2>
-      <p style="margin-top:12px;">Outras empresas estão tentando registrar nomes parecidos. Fale conosco agora no WhatsApp!</p>
-      <button id="popup-whatsapp" style="margin-top:18px; background:#22c55e; color:white; border:none; padding:12px 20px; border-radius:8px; cursor:pointer; font-weight:600; width:100%;">Registrar Minha Marca Agora</button>
-      <button id="popup-close" style="margin-top:10px; background:none; border:1px solid #ccc; padding:10px 20px; border-radius:8px; cursor:pointer; width:100%;">Continuar Navegando</button>
-      <p style="font-size:12px; color:#555; margin-top:10px;">🔒 Atendimento rápido e confidencial</p>
-    </div>
-  </div>`;
-  document.getElementById("popup-container").innerHTML = html;
-
-  const popup = document.getElementById("exit-popup");
-  const btnClose = document.getElementById("popup-close");
-  const btnWhats = document.getElementById("popup-whatsapp");
-  const link = "https://wa.me/5511912200912?text=" + encodeURIComponent("Olá! Não quero perder a oportunidade de proteger minha marca!");
-  let shown = sessionStorage.getItem("exitPopupShown");
-
-  if (!shown) {
-    let triggered = false, scrolls = 0, lastY = window.scrollY;
-    window.addEventListener("scroll", () => {
-      if (Math.abs(window.scrollY - lastY) > 60) {
-        scrolls++; lastY = window.scrollY;
-        if (scrolls >= 2 && !triggered) showPopup("scroll");
-      }
-    });
-    setTimeout(() => !triggered && showPopup("timeout"), 5000);
-    document.addEventListener("mouseleave", (e)=>{ if(e.clientY<=10&&!triggered)showPopup("mouseleave"); });
-
-    function showPopup(r){
-      triggered=true;popup.style.display="flex";
-      sessionStorage.setItem("exitPopupShown","true");
-      console.log("Popup aberto via:",r);
-      if(typeof fbq!=="undefined") fbq("trackCustom","PopupShown",{trigger:r});
-      if(typeof gtag!=="undefined") gtag("event","popup_shown",{method:r});
-    }
-  }
-  btnClose.onclick=()=>popup.style.display="none";
-  btnWhats.onclick=()=>{
-    if(typeof fbq!=="undefined") fbq("track","Lead");
-    if(typeof gtag!=="undefined") gtag("event","whatsapp_click",{category:"Popup"});
-    window.open(link,"_blank");popup.style.display="none";
-  };
-})();
-</script>
 
   <body>
     <!-- Google Tag Manager (noscript) -->
