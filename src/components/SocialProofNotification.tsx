@@ -58,10 +58,12 @@ const SocialProofNotification = () => {
     };
   }, []);
 
-  if (!isVisible) return null;
-
   return (
-    <div className="fixed bottom-24 left-4 right-4 sm:bottom-6 sm:left-auto sm:right-6 z-[9999] animate-fade-in">
+    <div 
+      className={`fixed bottom-24 left-4 right-4 sm:bottom-6 sm:left-auto sm:right-6 z-[9999] transition-all duration-300 ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
+      }`}
+    >
       <div className="bg-card border-2 border-accent/20 rounded-lg shadow-2xl p-3 sm:p-4 w-full sm:max-w-sm backdrop-blur-md">
         <div className="flex items-start gap-2 sm:gap-3">
           <div className="flex-shrink-0">
