@@ -96,3 +96,20 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  @keyframes subtle-pulse {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.9;
+      transform: scale(1.05);
+    }
+  }
+
+  .animate-subtle-pulse {
+    animation: subtle-pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
