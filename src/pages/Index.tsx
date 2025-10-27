@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Hero from "@/components/Hero";
-import Benefits from "@/components/Benefits";
+import WhatIsTrademarkRegistration from "@/components/WhatIsTrademarkRegistration";
 import Process from "@/components/Process";
 import Testimonials from "@/components/Testimonials";
 import WhyChooseUs from "@/components/WhyChooseUs";
@@ -33,7 +33,7 @@ const Index = () => {
   return (
     <main className="min-h-screen">
       <Hero />
-      <Benefits />
+      <WhatIsTrademarkRegistration />
       <Process />
       <Testimonials />
       <WhyChooseUs />
