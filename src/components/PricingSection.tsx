@@ -25,7 +25,7 @@ const PricingSection = () => {
             Invista na Proteção da Sua Marca
           </h2>
           <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
-            Planos <strong>A PARTIR</strong> de R$ 1.500 reais
+            Planos <strong>A PARTIR</strong> de R$ 1.800 reais
           </p>
         </div>
 
@@ -72,7 +72,7 @@ const PricingSection = () => {
                   <CreditCard className="w-5 h-5 sm:w-6 sm:h-6 text-primary flex-shrink-0" />
                   <div>
                     <p className="font-semibold text-sm sm:text-base text-foreground">Cartão de Crédito</p>
-                    <p className="text-xs sm:text-sm text-muted-foreground">Em até 12x</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">Em até 6x sem jurosx</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 bg-accent/10 p-3 sm:p-4 rounded-lg border border-accent/20">
@@ -88,7 +88,7 @@ const PricingSection = () => {
             {/* Urgency CTA */}
             <div className="bg-accent/10 border border-accent/20 rounded-lg p-4 mb-6 text-center">
               <p className="text-sm sm:text-base text-foreground font-semibold mb-1">
-                🔥 ATENÇÃO: Apenas 5 vagas disponíveis hoje!
+                🔥 ATENÇÃO: Apenas 3 vagas disponíveis hoje!
               </p>
               <p className="text-xs sm:text-sm text-muted-foreground">
                 Garanta sua vaga agora e evite perder o nome da sua empresa
