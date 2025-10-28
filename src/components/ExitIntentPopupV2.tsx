@@ -183,10 +183,10 @@ const ExitIntentPopupV2 = () => {
                 PREÇO FINAL COM DESCONTO EXTRA
               </p>
               <p className="text-center text-4xl font-black text-green-600">
-                R$ 1.600
+                R$ 1.600 à vista.
               </p>
               <p className="text-center text-xs text-muted-foreground mt-1">
-                ou 12x de R$ 133,33 sem juros
+                ou 3x com juros no cartão.
               </p>
             </div>
           </div>
