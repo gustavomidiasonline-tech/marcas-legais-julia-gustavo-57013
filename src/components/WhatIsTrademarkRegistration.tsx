@@ -84,8 +84,9 @@ const WhatIsTrademarkRegistration = () => {
           })}
         </div>
 
-        {/* Box de Alerta de Riscos */}
-        <div className="max-w-5xl mx-auto animate-fade-in" style={{ animationDelay: '0.4s' }}>
+        {/* Comparação: Riscos vs Benefícios */}
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-6 sm:gap-8 animate-fade-in" style={{ animationDelay: '0.4s' }}>
+          {/* Box de Riscos */}
           <div className="bg-gradient-to-r from-red-50 to-orange-50 border-l-4 border-destructive rounded-lg p-6 sm:p-8 shadow-lg">
             <div className="flex items-start gap-3 sm:gap-4 mb-6">
               <div className="p-2 bg-destructive rounded-lg flex-shrink-0">
@@ -108,6 +109,40 @@ const WhatIsTrademarkRegistration = () => {
                   </div>
                   <p className="text-sm sm:text-base text-foreground font-medium">
                     {risk}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Box de Benefícios */}
+          <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-l-4 border-green-600 rounded-lg p-6 sm:p-8 shadow-lg">
+            <div className="flex items-start gap-3 sm:gap-4 mb-6">
+              <div className="p-2 bg-green-600 rounded-lg flex-shrink-0">
+                <Shield className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+              </div>
+              <h3 className="text-xl sm:text-2xl font-bold text-green-700">
+                Com registro, você garante:
+              </h3>
+            </div>
+            
+            <div className="space-y-3 sm:space-y-4">
+              {[
+                "Direito exclusivo de uso da marca em todo território nacional",
+                "Proteção legal contra cópias e uso indevido por terceiros",
+                "Valorização do seu negócio e aumento da credibilidade",
+                "Segurança jurídica para expandir e crescer com tranquilidade"
+              ].map((benefit, index) => (
+                <div 
+                  key={index}
+                  className="flex items-start gap-3 animate-fade-in"
+                  style={{ animationDelay: `${0.5 + index * 0.1}s` }}
+                >
+                  <div className="p-1 rounded-full bg-green-600/10 flex-shrink-0 mt-0.5">
+                    <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-green-600" />
+                  </div>
+                  <p className="text-sm sm:text-base text-foreground font-medium">
+                    {benefit}
                   </p>
                 </div>
               ))}
