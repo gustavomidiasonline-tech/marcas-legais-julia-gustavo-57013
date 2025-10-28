@@ -12,6 +12,7 @@ import ExitIntentPopup from "@/components/ExitIntentPopup";
 import ExitIntentPopupV2 from "@/components/ExitIntentPopupV2";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import SocialProofNotification from "@/components/SocialProofNotification";
+import ScarcityBanner from "@/components/ScarcityBanner";
 
 const Index = () => {
   const [showV2, setShowV2] = useState(false);
@@ -32,6 +33,7 @@ const Index = () => {
 
   return (
     <main className="min-h-screen">
+      <ScarcityBanner />
       <Hero />
       <WhatIsTrademarkRegistration />
       <Process />
