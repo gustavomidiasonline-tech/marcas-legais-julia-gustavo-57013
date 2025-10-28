@@ -54,7 +54,7 @@ const FinalCTA = () => {
             {/* Urgency Banner */}
             <div className="bg-white/10 backdrop-blur-sm border-2 border-white/20 rounded-xl p-4 sm:p-5 w-full max-w-lg">
               <p className="text-base sm:text-lg text-center font-bold text-white flex items-center justify-center gap-2">
-                🔥 <span>ATENÇÃO: Apenas 5 vagas disponíveis hoje!</span>
+                🔥 <span>ATENÇÃO: Apenas 3 vagas disponíveis hoje!</span>
               </p>
               <p className="text-sm sm:text-base text-center text-white/90 mt-2">
                 Garanta sua vaga agora e evite perder o nome da sua empresa
