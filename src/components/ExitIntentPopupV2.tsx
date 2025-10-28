@@ -14,6 +14,7 @@ const ExitIntentPopupV2 = () => {
   const [hasShown, setHasShown] = useState(false);
   const [canShow, setCanShow] = useState(false);
   const [timeLeft, setTimeLeft] = useState(10);
+  const [hasSeenPricing, setHasSeenPricing] = useState(false);
 
   const scrollCount = useRef(0);
   const lastScrollY = useRef(0);
@@ -43,12 +44,28 @@ const ExitIntentPopupV2 = () => {
       }
     } catch {}
 
-    const timer = setTimeout(() => setCanShow(true), 1000);
+    const timer = setTimeout(() => setCanShow(true), 5000);
     return () => clearTimeout(timer);
   }, [isClient]);
 
+  // Detectar quando usuário vê a seção de preços
   useEffect(() => {
-    if (!isClient || !canShow || hasShown || isMobile) return;
+    if (!isClient || hasShown) return;
+
+    const checkScroll = () => {
+      const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+      if (scrollPercent >= 60) {
+        setHasSeenPricing(true);
+      }
+    };
+
+    window.addEventListener("scroll", checkScroll, { passive: true });
+    checkScroll();
+    return () => window.removeEventListener("scroll", checkScroll);
+  }, [isClient, hasShown]);
+
+  useEffect(() => {
+    if (!isClient || !canShow || hasShown || isMobile || !hasSeenPricing) return;
 
     const handleMouseLeave = (e) => {
       if (e.clientY <= 10 && !isOpen && !hasShown) {
@@ -58,10 +75,10 @@ const ExitIntentPopupV2 = () => {
 
     document.addEventListener("mouseleave", handleMouseLeave);
     return () => document.removeEventListener("mouseleave", handleMouseLeave);
-  }, [isClient, canShow, hasShown, isOpen, isMobile]);
+  }, [isClient, canShow, hasShown, isOpen, isMobile, hasSeenPricing]);
 
   useEffect(() => {
-    if (!isClient || !canShow || hasShown || !isMobile) return;
+    if (!isClient || !canShow || hasShown || !isMobile || !hasSeenPricing) return;
 
     const scrollThreshold = 50;
     lastScrollY.current = window.scrollY;
@@ -73,24 +90,25 @@ const ExitIntentPopupV2 = () => {
       if (diff > scrollThreshold) {
         scrollCount.current += 1;
         lastScrollY.current = currentY;
-        if (scrollCount.current >= 2 && !isOpen && !hasShown) {
-          openPopup("2_scrolls");
+        console.log(`📱 Scroll ${scrollCount.current}/4`);
+        if (scrollCount.current >= 4 && !isOpen && !hasShown) {
+          openPopup("4_scrolls");
         }
       }
     };
 
     timeoutRef.current = setTimeout(() => {
       if (!isOpen && !hasShown) {
-        openPopup("timeout_8s");
+        openPopup("timeout_30s");
       }
-    }, 8000);
+    }, 30000);
 
     target.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
       target.removeEventListener("scroll", handleScroll);
       clearTimeout(timeoutRef.current);
     };
-  }, [isClient, canShow, hasShown, isOpen, isMobile, isIframe]);
+  }, [isClient, canShow, hasShown, isOpen, isMobile, isIframe, hasSeenPricing]);
 
   useEffect(() => {
     if (isOpen && timeLeft > 0) {
@@ -195,7 +213,7 @@ const ExitIntentPopupV2 = () => {
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-sm">
               <Check className="w-5 h-5 text-green-600 flex-shrink-0" />
-              <span className="text-foreground">Total de R$ 1.250 de economia</span>
+              <span className="text-foreground">Total de R$ 200 de economia</span>
             </div>
             <div className="flex items-center gap-2 text-sm">
               <Check className="w-5 h-5 text-green-600 flex-shrink-0" />

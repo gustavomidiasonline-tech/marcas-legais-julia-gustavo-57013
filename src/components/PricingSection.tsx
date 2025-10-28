@@ -25,7 +25,7 @@ const PricingSection = () => {
             Invista na Proteção da Sua Marca
           </h2>
           <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
-            Planos <strong>A PARTIR</strong> de R$ 1.800 reais
+            Planos a partir de <strong>R$ 1.800,00</strong>
           </p>
         </div>
 
@@ -41,7 +41,7 @@ const PricingSection = () => {
               <div className="flex items-baseline justify-center gap-2 mb-2">
                 <span className="text-lg sm:text-xl text-muted-foreground mr-2">A partir de</span>
                 <span className="text-3xl sm:text-4xl lg:text-5xl font-bold text-primary">
-                  R$ 1.500
+                  R$ 1.800
                 </span>
               </div>
               <p className="text-sm sm:text-base text-muted-foreground">

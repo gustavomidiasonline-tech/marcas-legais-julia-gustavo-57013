@@ -13,6 +13,7 @@ const ExitIntentPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [hasShown, setHasShown] = useState(false);
   const [canShow, setCanShow] = useState(false);
+  const [hasSeenPricing, setHasSeenPricing] = useState(false);
 
   const scrollCount = useRef(0);
   const lastScrollY = useRef(0);
@@ -44,13 +45,29 @@ const ExitIntentPopup = () => {
       }
     } catch {}
 
-    const timer = setTimeout(() => setCanShow(true), 1000); // 1 segundo
+    const timer = setTimeout(() => setCanShow(true), 5000); // 5 segundos
     return () => clearTimeout(timer);
   }, [isClient]);
 
+  // Detectar quando usuário vê a seção de preços
+  useEffect(() => {
+    if (!isClient || hasShown) return;
+
+    const checkScroll = () => {
+      const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+      if (scrollPercent >= 60) {
+        setHasSeenPricing(true);
+      }
+    };
+
+    window.addEventListener("scroll", checkScroll, { passive: true });
+    checkScroll(); // Check initial position
+    return () => window.removeEventListener("scroll", checkScroll);
+  }, [isClient, hasShown]);
+
   // Desktop: sair do topo
   useEffect(() => {
-    if (!isClient || !canShow || hasShown || isMobile) return;
+    if (!isClient || !canShow || hasShown || isMobile || !hasSeenPricing) return;
 
     const handleMouseLeave = (e) => {
       if (e.clientY <= 10 && !isOpen && !hasShown) {
@@ -60,11 +77,11 @@ const ExitIntentPopup = () => {
 
     document.addEventListener("mouseleave", handleMouseLeave);
     return () => document.removeEventListener("mouseleave", handleMouseLeave);
-  }, [isClient, canShow, hasShown, isOpen, isMobile]);
+  }, [isClient, canShow, hasShown, isOpen, isMobile, hasSeenPricing]);
 
-  // Mobile: 2 scrolls + fallback rápido
+  // Mobile: 4 scrolls + fallback de 30s (só após ver preços)
   useEffect(() => {
-    if (!isClient || !canShow || hasShown || !isMobile) return;
+    if (!isClient || !canShow || hasShown || !isMobile || !hasSeenPricing) return;
 
     const scrollThreshold = 50;
     lastScrollY.current = window.scrollY;
@@ -76,26 +93,26 @@ const ExitIntentPopup = () => {
       if (diff > scrollThreshold) {
         scrollCount.current += 1;
         lastScrollY.current = currentY;
-        console.log(`📱 Scroll ${scrollCount.current}/2`);
-        if (scrollCount.current >= 2 && !isOpen && !hasShown) {
-          openPopup("2_scrolls");
+        console.log(`📱 Scroll ${scrollCount.current}/4`);
+        if (scrollCount.current >= 4 && !isOpen && !hasShown) {
+          openPopup("4_scrolls");
         }
       }
     };
 
-    // Fallback rápido (8 segundos)
+    // Fallback de 30 segundos
     timeoutRef.current = setTimeout(() => {
       if (!isOpen && !hasShown) {
-        openPopup("timeout_8s");
+        openPopup("timeout_30s");
       }
-    }, 8000);
+    }, 30000);
 
     target.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
       target.removeEventListener("scroll", handleScroll);
       clearTimeout(timeoutRef.current);
     };
-  }, [isClient, canShow, hasShown, isOpen, isMobile, isIframe]);
+  }, [isClient, canShow, hasShown, isOpen, isMobile, isIframe, hasSeenPricing]);
 
   // Função para abrir popup
   const openPopup = (trigger) => {
@@ -138,6 +155,12 @@ const ExitIntentPopup = () => {
           <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg mb-4">
             <p className="text-sm sm:text-base text-foreground font-bold text-center">
               🚨 <span className="text-red-600">URGENTE:</span> 3 empresas consultaram marcas similares à sua hoje. Registre a sua marca PRIMEIRO!
+            </p>
+          </div>
+
+          <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg mb-4">
+            <p className="text-sm sm:text-base text-foreground font-bold text-center">
+              💰 <span className="text-green-600">DESCONTO ESPECIAL:</span> R$ 200 de desconto! De R$ 1.800 por apenas <span className="text-2xl text-green-600">R$ 1.600</span>
             </p>
           </div>
 
