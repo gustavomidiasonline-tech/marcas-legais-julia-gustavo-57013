@@ -36,18 +36,59 @@ const WhatIsTrademarkRegistration = () => {
   const [userCity, setUserCity] = useState<string>("");
 
   useEffect(() => {
-    // Buscar localização do usuário
-    fetch('https://ipapi.co/json/')
-      .then(response => response.json())
-      .then(data => {
-        if (data.city) {
-          setUserCity(data.city);
-        }
-      })
-      .catch(() => {
-        // Se falhar, não exibe cidade
-        setUserCity("");
-      });
+    // Tentar obter localização mais precisa via navegador primeiro
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          try {
+            // Usar reverse geocoding para obter cidade a partir de coordenadas
+            const response = await fetch(
+              `https://nominatim.openstreetmap.org/reverse?format=json&lat=${position.coords.latitude}&lon=${position.coords.longitude}&accept-language=pt-BR`
+            );
+            const data = await response.json();
+            
+            // Tentar extrair cidade de várias propriedades possíveis
+            const city = data.address?.city || 
+                        data.address?.town || 
+                        data.address?.municipality ||
+                        data.address?.county;
+            
+            if (city) {
+              setUserCity(city);
+              console.log('📍 Cidade detectada (GPS):', city);
+            } else {
+              // Fallback para IP
+              fetchCityByIP();
+            }
+          } catch {
+            // Fallback para IP
+            fetchCityByIP();
+          }
+        },
+        () => {
+          // Se usuário negar permissão, usar IP
+          fetchCityByIP();
+        },
+        { timeout: 5000 }
+      );
+    } else {
+      // Navegador não suporta geolocalização, usar IP
+      fetchCityByIP();
+    }
+
+    function fetchCityByIP() {
+      fetch('https://ipapi.co/json/')
+        .then(response => response.json())
+        .then(data => {
+          if (data.city) {
+            setUserCity(data.city);
+            console.log('📍 Cidade detectada (IP):', data.city);
+          }
+        })
+        .catch(() => {
+          setUserCity("");
+        });
+    }
   }, []);
 
   return (
