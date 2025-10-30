@@ -20,18 +20,56 @@ const clientNames = [
   "Beatriz Rodrigues"
 ];
 
+const cities = [
+  "São Paulo", "Campinas", "Atibaia", "Belo Horizonte", 
+  "Rio de Janeiro", "Curitiba", "Porto Alegre", "Salvador",
+  "Recife", "Brasília", "Fortaleza", "Manaus", "Goiânia",
+  "Ribeirão Preto", "Sorocaba", "Santos", "Jundiaí", "Pouso Alegre",
+  "Florianópolis", "Vitória", "Natal", "João Pessoa"
+];
+
+const businessTypes = [
+  "Restaurante Bella Vista",
+  "Loja de Roupas Fashion",
+  "Consultoria Empresarial Pro",
+  "E-commerce TechStore",
+  "Academia FitLife",
+  "Salão de Beleza Elegance",
+  "Escritório de Advocacia Silva & Santos",
+  "Clínica Médica Saúde Mais",
+  "Agência de Marketing Digital",
+  "Padaria Pão Quente",
+  "Cafeteria Aroma",
+  "Pet Shop Amigo Fiel",
+  "Farmácia Vida Saudável",
+  "Lanchonete Sabor Express",
+  "Autoescola Direção Segura",
+  "Imobiliária Prime",
+  "Oficina Auto Mecânica",
+  "Pizzaria Napolitana",
+  "Hamburgueria Burger House",
+  "Sorveteria Gelato"
+];
+
 const SocialProofNotification = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [currentClient, setCurrentClient] = useState("");
+  const [currentCity, setCurrentCity] = useState("");
+  const [currentBusiness, setCurrentBusiness] = useState("");
 
   useEffect(() => {
     console.log('🔔 SocialProofNotification component mounted');
     
     const showNotification = () => {
       const randomClient = clientNames[Math.floor(Math.random() * clientNames.length)];
+      const randomCity = cities[Math.floor(Math.random() * cities.length)];
+      const randomBusiness = businessTypes[Math.floor(Math.random() * businessTypes.length)];
+      
       setCurrentClient(randomClient);
+      setCurrentCity(randomCity);
+      setCurrentBusiness(randomBusiness);
       setIsVisible(true);
-      console.log('✅ Showing notification for:', randomClient);
+      console.log('✅ Showing notification for:', randomClient, '-', randomBusiness, 'em', randomCity);
 
       setTimeout(() => {
         setIsVisible(false);
@@ -77,7 +115,7 @@ const SocialProofNotification = () => {
               🔥 Nova marca registrada!
             </p>
             <p className="text-[11px] sm:text-xs text-muted-foreground mt-0.5 sm:mt-1">
-              <span className="font-medium text-foreground">{currentClient}</span> acabou de registrar sua marca com a Legal Marcas
+              <span className="font-medium text-foreground">{currentClient}</span> da empresa <span className="font-medium text-foreground">{currentBusiness}</span> em <span className="font-medium text-foreground">{currentCity}</span> acabou de registrar sua marca com a Legal Marcas
             </p>
           </div>
 
