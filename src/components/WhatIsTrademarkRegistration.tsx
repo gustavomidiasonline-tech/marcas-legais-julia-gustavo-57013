@@ -1,5 +1,6 @@
 import { Shield, Award, Lock, TrendingUp, AlertTriangle, X } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { useState, useEffect } from "react";
 
 const benefits = [
   {
@@ -32,6 +33,23 @@ const risks = [
 ];
 
 const WhatIsTrademarkRegistration = () => {
+  const [userCity, setUserCity] = useState<string>("");
+
+  useEffect(() => {
+    // Buscar localização do usuário
+    fetch('https://ipapi.co/json/')
+      .then(response => response.json())
+      .then(data => {
+        if (data.city) {
+          setUserCity(data.city);
+        }
+      })
+      .catch(() => {
+        // Se falhar, não exibe cidade
+        setUserCity("");
+      });
+  }, []);
+
   return (
     <section className="py-12 sm:py-16 lg:py-20 bg-background">
       <div className="container mx-auto px-4">
@@ -40,7 +58,7 @@ const WhatIsTrademarkRegistration = () => {
           <div className="bg-yellow-50 border-l-4 border-yellow-500 p-3 sm:p-4 rounded-r-lg flex items-center gap-2">
             <AlertTriangle className="w-5 h-5 text-yellow-600 flex-shrink-0" />
             <p className="text-xs sm:text-sm font-semibold text-yellow-800">
-              ATENÇÃO: 60% das empresas perdem suas marcas por não registrarem
+              ATENÇÃO: 60% das empresas {userCity ? `de ${userCity} ` : ""}perdem suas marcas por não registrarem da forma correta
             </p>
           </div>
         </div>

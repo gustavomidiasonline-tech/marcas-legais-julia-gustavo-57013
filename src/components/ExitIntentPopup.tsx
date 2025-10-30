@@ -160,7 +160,7 @@ const ExitIntentPopup = () => {
 
           <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg mb-4">
             <p className="text-sm sm:text-base text-foreground font-bold text-center">
-              💰 <span className="text-green-600">DESCONTO ESPECIAL:</span> R$ 200 de desconto! De R$ 1.800 por apenas <span className="text-2xl text-green-600">R$ 1.600</span>
+              💰 <span className="text-green-600">DESCONTO ESPECIAL:</span> Mais R$ 200 de desconto exclusivo! Chame agora para garantir.
             </p>
           </div>
 

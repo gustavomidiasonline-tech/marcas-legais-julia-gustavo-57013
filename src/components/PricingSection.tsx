@@ -56,7 +56,7 @@ const PricingSection = () => {
                   className="flex items-start gap-3 animate-fade-in"
                   style={{ animationDelay: `${0.2 + index * 0.05}s` }}
                 >
-                  <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0 text-primary mt-0.5" />
+                  <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0 text-green-600 mt-0.5" />
                   <span className="text-sm sm:text-base text-foreground">{benefit}</span>
                 </div>
               ))}
