@@ -1,4 +1,5 @@
 import { Search, FileText, Eye, Award } from "lucide-react";
+import SectionCTA from "@/components/SectionCTA";
 
 const steps = [
   {
@@ -74,6 +75,11 @@ const Process = () => {
               </div>
             );
           })}
+        </div>
+
+        {/* CTA Section */}
+        <div className="mt-12 sm:mt-16">
+          <SectionCTA title="👉 Pronto para começar seu registro?" />
         </div>
       </div>
     </section>

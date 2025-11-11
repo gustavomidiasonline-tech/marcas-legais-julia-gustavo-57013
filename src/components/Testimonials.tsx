@@ -3,6 +3,7 @@ import { Star } from "lucide-react";
 import testimonial1 from "@/assets/testimonial-1.jpg";
 import testimonial2 from "@/assets/testimonial-2.jpg";
 import testimonial3 from "@/assets/testimonial-3.jpg";
+import SectionCTA from "@/components/SectionCTA";
 
 const testimonials = [
   {
@@ -87,6 +88,11 @@ const Testimonials = () => {
             <Star className="w-4 h-4 sm:w-5 sm:h-5 fill-gold text-gold" />
             <span className="font-semibold text-xs sm:text-sm">Mais de 1.000 marcas registradas com sucesso</span>
           </div>
+        </div>
+
+        {/* CTA Section */}
+        <div className="mt-12 sm:mt-16">
+          <SectionCTA title="👉 Quer proteger sua marca também?" />
         </div>
       </div>
     </section>

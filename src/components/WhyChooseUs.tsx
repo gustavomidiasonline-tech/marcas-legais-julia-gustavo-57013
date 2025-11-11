@@ -1,4 +1,5 @@
 import { Shield, Clock, Award, ThumbsUp, CheckCircle, AlertCircle } from "lucide-react";
+import SectionCTA from "@/components/SectionCTA";
 
 const stats = [
   {
@@ -179,6 +180,11 @@ const WhyChooseUs = () => {
               Registrar com a Legal Marcas
             </button>
           </div>
+        </div>
+
+        {/* CTA Section */}
+        <div className="mt-12 sm:mt-16">
+          <SectionCTA title="👉 Escolha a melhor opção para sua marca!" variant="primary" />
         </div>
       </div>
     </section>

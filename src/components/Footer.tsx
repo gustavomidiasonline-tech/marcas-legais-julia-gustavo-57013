@@ -59,26 +59,32 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Legal */}
+          {/* Legal & Social */}
           <div className="space-y-3 sm:space-y-4">
             <h4 className="font-semibold text-base sm:text-lg">Informações</h4>
-            <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-primary-foreground/80">
-              <li>
-                <a href="#" className="hover:text-accent transition-colors">
-                  Política de Privacidade
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-accent transition-colors">
-                  Termos de Uso
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-accent transition-colors">
-                  FAQ
-                </a>
-              </li>
-            </ul>
+            <div className="space-y-2 sm:space-y-3 text-xs sm:text-sm text-primary-foreground/80">
+              <p><strong>CNPJ:</strong> [A definir]</p>
+              <p><strong>Endereço:</strong> [A definir]</p>
+              <p>
+                <strong>Horário:</strong><br />
+                Segunda a Sexta: 9h às 18h<br />
+                Sábado: 9h às 13h
+              </p>
+              <div className="pt-2">
+                <p className="font-semibold mb-2">Siga-nos:</p>
+                <div className="flex gap-3">
+                  <a href="#" className="hover:text-accent transition-colors" aria-label="Instagram">
+                    📷 Instagram
+                  </a>
+                  <a href="#" className="hover:text-accent transition-colors" aria-label="Facebook">
+                    📘 Facebook
+                  </a>
+                  <a href="#" className="hover:text-accent transition-colors" aria-label="LinkedIn">
+                    💼 LinkedIn
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 

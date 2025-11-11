@@ -30,6 +30,38 @@ const faqs = [
     question: "Minha marca fica protegida desde o início do processo?",
     answer: "Sim! A partir do momento em que o pedido é protocolado no INPI, você já tem direito de prioridade sobre aquela marca. Isso significa que, mesmo que o processo demore, ninguém mais poderá registrar uma marca igual ou similar depois da sua solicitação.",
   },
+  {
+    question: "O que está incluído no valor de R$ 1.800?",
+    answer: "O valor inclui tudo que você precisa: análise completa de viabilidade da marca, preparação e protocolo de toda documentação necessária, acompanhamento de todo o processo no INPI (que pode levar de 12 a 24 meses), suporte jurídico especializado em todas as etapas, defesa da marca em caso de oposição, e entrega do certificado oficial de registro. Sem taxas ocultas ou mensalidades.",
+  },
+  {
+    question: "Vocês têm garantia de registro?",
+    answer: "Sim! Se sua marca não for aprovada pelo INPI após todo o processo, refazemos o pedido sem custo adicional. Além disso, oferecemos garantia de satisfação: se não ficar satisfeito com nosso atendimento nos primeiros 7 dias, devolvemos 100% do valor pago.",
+  },
+  {
+    question: "Como funciona o pagamento?",
+    answer: "Aceitamos pagamento via cartão de crédito em até 6x sem juros ou PIX à vista com 10% de desconto. O pagamento é 100% seguro e você pode escolher a modalidade que melhor se encaixa no seu orçamento. Após a confirmação do pagamento, já iniciamos o processo em até 24 horas.",
+  },
+  {
+    question: "Posso cancelar se mudar de ideia?",
+    answer: "Sim. Você tem 7 dias após a contratação para cancelar o serviço e receber 100% do valor de volta, conforme o Código de Defesa do Consumidor. Após esse prazo, caso o processo já tenha sido iniciado no INPI, não é possível reembolsar as taxas governamentais já pagas, mas você pode cancelar nossos honorários profissionais.",
+  },
+  {
+    question: "Qual a diferença entre marca e patente?",
+    answer: "Marca é o nome, logo ou símbolo que identifica seus produtos ou serviços, diferenciando-os dos concorrentes. Patente protege invenções, produtos ou processos inovadores. Se você tem um negócio (restaurante, loja, clínica, etc.), precisa registrar a MARCA. Se criou um produto novo, uma tecnologia ou processo inovador, aí sim precisa de PATENTE. Nós somos especialistas em registro de marcas.",
+  },
+  {
+    question: "Preciso renovar a marca?",
+    answer: "Sim, mas apenas depois de 10 anos! Uma vez registrada, sua marca fica protegida por 10 anos. Após esse período, basta fazer uma renovação simples (que também podemos cuidar para você) e sua marca continua protegida por mais 10 anos. Você pode renovar quantas vezes quiser, mantendo a exclusividade para sempre.",
+  },
+  {
+    question: "Como sei que minha marca foi registrada?",
+    answer: "Durante todo o processo, você acompanha cada etapa em tempo real através do nosso sistema. Enviamos atualizações regulares por WhatsApp e e-mail sobre o andamento no INPI. Quando sua marca for aprovada, você receberá o certificado oficial de registro emitido pelo INPI, comprovando que a marca é sua e está protegida em todo território nacional.",
+  },
+  {
+    question: "Vocês atendem todo o Brasil?",
+    answer: "Sim! Atendemos clientes de todos os estados brasileiros. Todo o processo é feito online de forma prática e segura. O registro de marca é válido nacionalmente, protegendo sua marca em todos os 26 estados e no Distrito Federal. Não importa onde você esteja, podemos cuidar do registro da sua marca com a mesma qualidade e dedicação.",
+  },
 ];
 
 const FAQ = () => {

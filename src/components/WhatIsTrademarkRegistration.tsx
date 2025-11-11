@@ -1,6 +1,7 @@
 import { Shield, Award, Lock, TrendingUp, AlertTriangle, X } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useState, useEffect } from "react";
+import SectionCTA from "@/components/SectionCTA";
 
 const benefits = [
   {
@@ -165,6 +166,11 @@ const WhatIsTrademarkRegistration = () => {
               ))}
             </div>
           </div>
+        </div>
+
+        {/* CTA Section */}
+        <div className="mt-12 sm:mt-16">
+          <SectionCTA title="👉 Proteja sua marca agora mesmo!" variant="primary" />
         </div>
       </div>
     </section>

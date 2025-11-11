@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import Hero from "@/components/Hero";
+import Header from "@/components/Header";
 import WhatIsTrademarkRegistration from "@/components/WhatIsTrademarkRegistration";
 import Process from "@/components/Process";
 import Testimonials from "@/components/Testimonials";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import PricingSection from "@/components/PricingSection";
+import Guarantees from "@/components/Guarantees";
 import FAQ from "@/components/FAQ";
 import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
@@ -32,12 +34,14 @@ const Index = () => {
 
   return (
     <main className="min-h-screen">
+      <Header />
       <Hero />
       <WhatIsTrademarkRegistration />
       <Process />
       <Testimonials />
       <WhyChooseUs />
       <PricingSection />
+      <Guarantees />
       <FinalCTA />
       <FAQ />
       <Footer />
