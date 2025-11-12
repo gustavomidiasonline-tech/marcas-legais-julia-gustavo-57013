@@ -73,7 +73,7 @@ const LeadCaptureForm = () => {
     <div className="bg-gradient-subtle border-2 border-primary/20 rounded-xl p-6 sm:p-8 shadow-lg">
       <div className="text-center mb-6">
         <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-2">
-          📋 Consulta Gratuita de Marca
+          Consulta Gratuita de Marca
         </h3>
         <p className="text-sm sm:text-base text-muted-foreground">
           Preencha abaixo ou fale direto no WhatsApp
@@ -166,7 +166,7 @@ const LeadCaptureForm = () => {
       </form>
 
       <p className="text-xs text-center text-muted-foreground mt-4">
-        ✅ Seus dados estão seguros • Resposta em até 2 horas
+        Seus dados estão seguros • Resposta em até 2 horas
       </p>
     </div>
   );

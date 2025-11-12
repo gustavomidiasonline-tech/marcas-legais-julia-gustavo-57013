@@ -48,12 +48,12 @@ const Benefits = () => {
             return (
               <Card 
                 key={index} 
-                className="border-none shadow-md hover:shadow-xl transition-smooth group animate-fade-in"
+                className="border-none shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 group animate-fade-in"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <CardContent className="p-6 sm:p-8">
                   <div className="flex flex-col items-start space-y-3 sm:space-y-4">
-                    <div className="p-2.5 sm:p-3 rounded-lg bg-accent/10 text-accent group-hover:bg-accent group-hover:text-accent-foreground transition-smooth">
+                    <div className="p-2.5 sm:p-3 rounded-lg bg-accent/10 text-accent group-hover:bg-accent group-hover:text-accent-foreground transition-all duration-300 group-hover:scale-110 group-hover:rotate-3">
                       <Icon className="w-6 h-6 sm:w-8 sm:h-8" />
                     </div>
                     <h3 className="text-lg sm:text-xl font-bold text-foreground">
