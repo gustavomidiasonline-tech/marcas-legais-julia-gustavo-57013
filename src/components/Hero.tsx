@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Shield, CheckCircle } from "lucide-react";
 import heroImage from "@/assets/hero-brand-protection.jpg";
-import LeadCaptureForm from "@/components/LeadCaptureForm";
 
 const Hero = () => {
   const whatsappNumber = "5511912200912";
@@ -64,16 +63,11 @@ const Hero = () => {
               </div>
             </div>
 
-            {/* Lead Capture Form */}
-            <div className="animate-fade-in" style={{ animationDelay: '0.3s' }}>
-              <LeadCaptureForm />
-              
-              {/* Urgency Badge */}
-              <div className="bg-accent/20 border border-accent/30 rounded-lg px-4 py-2 backdrop-blur-sm text-center mt-4">
-                <p className="text-white text-sm font-medium">
-                  <strong>ATENÇÃO:</strong> Atendemos até 10 novos clientes por mês
-                </p>
-              </div>
+            {/* Urgency Badge */}
+            <div className="bg-accent/20 border border-accent/30 rounded-lg px-4 py-2 backdrop-blur-sm text-center animate-fade-in" style={{ animationDelay: '0.3s' }}>
+              <p className="text-white text-sm font-medium">
+                <strong>ATENÇÃO:</strong> Atendemos até 10 novos clientes por mês
+              </p>
             </div>
           </div>
 

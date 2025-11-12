@@ -79,7 +79,7 @@ const Process = () => {
 
         {/* CTA Section */}
         <div className="mt-12 sm:mt-16">
-          <SectionCTA title="👉 Pronto para começar seu registro?" />
+          <SectionCTA title="Pronto para começar seu registro?" />
         </div>
       </div>
     </section>

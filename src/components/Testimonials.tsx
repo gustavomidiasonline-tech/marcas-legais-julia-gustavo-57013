@@ -92,7 +92,7 @@ const Testimonials = () => {
 
         {/* CTA Section */}
         <div className="mt-12 sm:mt-16">
-          <SectionCTA title="👉 Quer proteger sua marca também?" />
+          <SectionCTA title="Quer proteger sua marca também?" />
         </div>
       </div>
     </section>

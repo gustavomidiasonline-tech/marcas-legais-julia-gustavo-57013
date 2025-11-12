@@ -170,7 +170,7 @@ const WhatIsTrademarkRegistration = () => {
 
         {/* CTA Section */}
         <div className="mt-12 sm:mt-16">
-          <SectionCTA title="👉 Proteja sua marca agora mesmo!" variant="primary" />
+          <SectionCTA title="Proteja sua marca agora mesmo!" variant="primary" />
         </div>
       </div>
     </section>

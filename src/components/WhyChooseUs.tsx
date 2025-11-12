@@ -139,9 +139,6 @@ const WhyChooseUs = () => {
                   </div>
                 ))}
               </div>
-              <button className="w-full mt-6 bg-background text-foreground hover:bg-background/90 font-semibold py-4 px-6 rounded-lg transition-all duration-300 hover:scale-105 text-sm sm:text-base min-h-[56px]">
-                Registre sua marca conosco
-              </button>
             </div>
 
             {/* Eles - Concorrência */}
@@ -172,13 +169,6 @@ const WhyChooseUs = () => {
                 ))}
               </div>
             </div>
-          </div>
-
-          <div className="mt-6 sm:mt-8 text-center">
-            <button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-4 px-8 rounded-lg transition-all duration-300 hover:scale-105 text-sm sm:text-base inline-flex items-center gap-2 shadow-lg min-h-[56px]">
-              <Shield className="w-5 h-5" />
-              Registrar com a Legal Marcas
-            </button>
           </div>
         </div>
 
