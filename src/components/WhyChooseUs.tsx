@@ -59,8 +59,8 @@ const WhyChooseUs = () => {
     <section className="py-12 sm:py-16 lg:py-20 bg-gradient-subtle">
       <div className="container mx-auto px-4">
         {/* Stats Section */}
-        <div className="text-center mb-10 sm:mb-12 lg:mb-16 animate-fade-in">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3 sm:mb-4">
+        <div className="text-center mb-10 sm:mb-12 lg:mb-16 animate-fade-in-up">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-montserrat font-bold text-foreground mb-3 sm:mb-4">
             Por Que Escolher a Marca Legal?
           </h2>
           <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -103,7 +103,7 @@ const WhyChooseUs = () => {
                 Nosso registro é completo
               </p>
             </div>
-            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4">
+            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-montserrat font-bold text-foreground mb-4">
               Por que você deveria contratar a Legal Marcas?
             </h3>
             <p className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto">

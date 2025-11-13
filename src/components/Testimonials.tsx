@@ -33,8 +33,8 @@ const Testimonials = () => {
   return (
     <section className="py-12 sm:py-16 lg:py-20 bg-secondary">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-10 sm:mb-12 lg:mb-16 animate-fade-in">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3 sm:mb-4">
+        <div className="text-center mb-10 sm:mb-12 lg:mb-16 animate-fade-in-up">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-montserrat font-bold text-foreground mb-3 sm:mb-4">
             Empreendedores que Confiaram em Nós
           </h2>
           <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
@@ -44,7 +44,7 @@ const Testimonials = () => {
 
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
           {testimonials.map((testimonial, index) => (
-            <Card key={index} className="border-none shadow-md hover:shadow-xl transition-smooth animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
+            <Card key={index} className="border-none shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 animate-slide-in-up" style={{ animationDelay: `${index * 0.15}s` }}>
               <CardContent className="p-6 sm:p-8">
                 <div className="space-y-4 sm:space-y-6">
                   {/* Stars */}

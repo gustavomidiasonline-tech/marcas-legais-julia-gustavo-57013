@@ -34,8 +34,8 @@ const Hero = () => {
             </div>
 
             {/* Headline */}
-            <div className="space-y-2 sm:space-y-3 animate-fade-in text-center lg:text-left" style={{ animationDelay: '0.2s' }}>
-              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight drop-shadow-lg">
+            <div className="space-y-2 sm:space-y-3 animate-fade-in-up text-center lg:text-left" style={{ animationDelay: '0.2s' }}>
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-montserrat font-bold leading-tight drop-shadow-lg">
                 Registre sua Marca no INPI e garanta exclusividade em todo o Brasil
               </h1>
               <p className="text-sm sm:text-base md:text-lg text-white/90 leading-relaxed drop-shadow-md max-w-2xl mx-auto lg:mx-0">
@@ -63,9 +63,21 @@ const Hero = () => {
               </div>
             </div>
 
+            {/* CTA Button */}
+            <div className="animate-bounce-in flex justify-center lg:justify-start" style={{ animationDelay: '0.3s' }}>
+              <a
+                href={whatsappLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-accent hover:bg-accent/90 text-white font-bold py-4 px-6 sm:px-8 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl text-sm sm:text-base lg:text-lg min-h-[56px]"
+              >
+                <span>Falar com Especialista no WhatsApp</span>
+              </a>
+            </div>
+
             {/* Urgency Badge */}
-            <div className="bg-accent/20 border border-accent/30 rounded-lg px-4 py-2 backdrop-blur-sm text-center animate-fade-in" style={{ animationDelay: '0.3s' }}>
-              <p className="text-white text-sm font-medium">
+            <div className="bg-accent/20 border border-accent/30 rounded-lg px-3 sm:px-4 py-2 backdrop-blur-sm text-center animate-fade-in" style={{ animationDelay: '0.4s' }}>
+              <p className="text-white text-xs sm:text-sm font-medium">
                 <strong>ATENÇÃO:</strong> Atendemos até 10 novos clientes por mês
               </p>
             </div>

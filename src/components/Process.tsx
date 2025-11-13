@@ -32,8 +32,8 @@ const Process = () => {
   return (
     <section className="py-12 sm:py-16 lg:py-20 bg-secondary">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-10 sm:mb-12 lg:mb-16 animate-fade-in">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3 sm:mb-4">
+        <div className="text-center mb-10 sm:mb-12 lg:mb-16 animate-fade-in-up">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-montserrat font-bold text-foreground mb-3 sm:mb-4">
             Como Funciona o Registro de Marca
           </h2>
           <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
@@ -51,12 +51,15 @@ const Process = () => {
                   <div className="hidden lg:block absolute top-16 left-full w-full h-0.5 bg-accent/20 -translate-x-1/2 z-0" />
                 )}
                 
-                <div className="relative z-10 space-y-3 sm:space-y-4">
-                  {/* Icon Circle */}
-                  <div className="relative">
-                    <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto rounded-full bg-gradient-accent flex items-center justify-center shadow-accent">
-                      <Icon className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
-                    </div>
+              <div 
+                key={index}
+                className="relative z-10 space-y-3 sm:space-y-4 group"
+              >
+                {/* Icon Circle */}
+                <div className="relative">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto rounded-full bg-gradient-accent flex items-center justify-center shadow-accent transition-all duration-300 group-hover:scale-110">
+                    <Icon className="w-8 h-8 sm:w-10 sm:h-10 text-white transition-transform duration-300 group-hover:rotate-12" />
+                  </div>
                     <div className="absolute -top-2 -right-2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gold text-gold-foreground flex items-center justify-center font-bold text-base sm:text-lg shadow-md">
                       {step.number}
                     </div>

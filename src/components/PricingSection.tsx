@@ -21,8 +21,8 @@ const PricingSection = () => {
   return (
     <section className="py-12 sm:py-16 lg:py-20 bg-gradient-subtle">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-10 sm:mb-12 animate-fade-in">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3 sm:mb-4">
+        <div className="text-center mb-10 sm:mb-12 animate-fade-in-up">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-montserrat font-bold text-foreground mb-3 sm:mb-4">
             Invista na Proteção da Sua Marca
           </h2>
           <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">

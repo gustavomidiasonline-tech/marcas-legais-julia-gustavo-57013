@@ -36,13 +36,45 @@ const Index = () => {
     <main className="min-h-screen">
       <Header />
       <Hero />
+      
+      {/* Gradient Transition */}
+      <div className="h-16 bg-gradient-to-b from-primary to-background"></div>
+      
       <WhatIsTrademarkRegistration />
+      
+      {/* Gradient Transition */}
+      <div className="h-16 bg-gradient-to-b from-background to-secondary/10"></div>
+      
       <Process />
+      
+      {/* Gradient Transition */}
+      <div className="h-16 bg-gradient-to-b from-secondary/10 to-background"></div>
+      
       <Testimonials />
+      
+      {/* Gradient Transition */}
+      <div className="h-16 bg-gradient-to-b from-background to-muted/20"></div>
+      
       <WhyChooseUs />
+      
+      {/* Gradient Transition */}
+      <div className="h-16 bg-gradient-to-b from-muted/20 to-background"></div>
+      
       <PricingSection />
+      
+      {/* Gradient Transition */}
+      <div className="h-16 bg-gradient-to-b from-background to-accent/5"></div>
+      
       <Guarantees />
+      
+      {/* Gradient Transition */}
+      <div className="h-16 bg-gradient-to-b from-accent/5 to-primary"></div>
+      
       <FinalCTA />
+      
+      {/* Gradient Transition */}
+      <div className="h-16 bg-gradient-to-b from-primary to-background"></div>
+      
       <FAQ />
       <Footer />
       {showV2 ? <ExitIntentPopupV2 /> : <ExitIntentPopup />}

@@ -64,8 +64,8 @@ const WhatIsTrademarkRegistration = () => {
         </div>
 
         {/* Título e Subtítulo */}
-        <div className="text-center mb-10 sm:mb-12 lg:mb-16 animate-fade-in">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3 sm:mb-4">
+        <div className="text-center mb-10 sm:mb-12 lg:mb-16 animate-fade-in-up">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-montserrat font-bold text-foreground mb-3 sm:mb-4">
             O Que É <span className="text-primary">Registro de Marca?</span>
           </h2>
           <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-3xl mx-auto px-4 mb-4">
@@ -78,17 +78,17 @@ const WhatIsTrademarkRegistration = () => {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-10 sm:mb-12 lg:mb-16">
           {benefits.map((benefit, index) => {
             const Icon = benefit.icon;
-            return (
-              <Card 
-                key={index} 
-                className="border-none shadow-md hover:shadow-xl transition-smooth group animate-fade-in bg-card"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <CardContent className="p-6 sm:p-8">
-                  <div className="flex flex-col items-center text-center space-y-3 sm:space-y-4">
-                    <div className="p-3 sm:p-4 rounded-xl bg-primary text-primary-foreground">
-                      <Icon className="w-8 h-8 sm:w-10 sm:h-10" />
-                    </div>
+              return (
+                <Card 
+                  key={index} 
+                  className="border-none shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 group animate-bounce-in bg-card"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <CardContent className="p-6 sm:p-8">
+                    <div className="flex flex-col items-center text-center space-y-3 sm:space-y-4">
+                      <div className="p-3 sm:p-4 rounded-xl bg-primary text-primary-foreground transition-transform duration-300 group-hover:rotate-6">
+                        <Icon className="w-8 h-8 sm:w-10 sm:h-10" />
+                      </div>
                     <h3 className="text-base sm:text-lg font-bold text-foreground">
                       {benefit.title}
                     </h3>

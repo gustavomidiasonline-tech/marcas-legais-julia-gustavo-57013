@@ -32,9 +32,9 @@ const Guarantees = () => {
   return (
     <section className="py-12 sm:py-16 lg:py-20 bg-background">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-10 sm:mb-12 animate-fade-in">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3 sm:mb-4">
-            🛡️ Nossas Garantias
+        <div className="text-center mb-10 sm:mb-12 animate-fade-in-up">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-montserrat font-bold text-foreground mb-3 sm:mb-4">
+            Nossas Garantias
           </h2>
           <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-2xl mx-auto">
             Seu investimento está protegido. Trabalhamos com total transparência e comprometimento.
@@ -47,11 +47,11 @@ const Guarantees = () => {
             return (
               <Card
                 key={index}
-                className={`border-2 ${guarantee.borderColor} ${guarantee.bgColor} shadow-md hover:shadow-xl transition-smooth animate-fade-in`}
-                style={{ animationDelay: `${index * 0.1}s` }}
+                className={`border-2 ${guarantee.borderColor} ${guarantee.bgColor} shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 animate-zoom-in`}
+                style={{ animationDelay: `${index * 0.15}s` }}
               >
                 <CardContent className="p-6 sm:p-8 text-center space-y-4">
-                  <div className={`inline-flex p-4 rounded-full ${guarantee.bgColor} border-2 ${guarantee.borderColor}`}>
+                  <div className={`inline-flex p-4 rounded-full ${guarantee.bgColor} border-2 ${guarantee.borderColor} transition-transform duration-300 hover:rotate-6`}>
                     <Icon className={`w-10 h-10 sm:w-12 sm:h-12 ${guarantee.color}`} />
                   </div>
                   <h3 className="text-lg sm:text-xl font-bold text-foreground">
@@ -68,8 +68,8 @@ const Guarantees = () => {
 
         {/* Additional Trust Message */}
         <div className="text-center mt-10 sm:mt-12 animate-fade-in" style={{ animationDelay: '0.3s' }}>
-          <p className="text-base sm:text-lg text-foreground font-semibold max-w-3xl mx-auto">
-            ✅ Mais de 1.000 marcas registradas com sucesso • 
+          <p className="text-sm sm:text-base lg:text-lg text-foreground font-semibold max-w-3xl mx-auto">
+            Mais de 1.000 marcas registradas com sucesso • 
             <span className="text-primary"> Satisfação garantida ou seu dinheiro de volta</span>
           </p>
         </div>
