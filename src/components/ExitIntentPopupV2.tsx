@@ -155,6 +155,14 @@ const ExitIntentPopupV2 = () => {
 
         {/* CONTEÚDO */}
         <div className="px-4 sm:px-6 pb-6 space-y-4">
+          {/* Box consultando agora */}
+          <div className="bg-blue-50 border-2 border-blue-400 rounded-lg p-3 flex items-center justify-center gap-2">
+            <Users className="w-5 h-5 text-blue-600 flex-shrink-0" />
+            <p className="text-sm font-bold text-blue-900 text-center">
+              2 empresas estão consultando a marca da sua empresa agora
+            </p>
+          </div>
+
           {/* Box registre agora */}
           <div className="bg-yellow-50 border-2 border-yellow-400 rounded-lg p-3">
             <p className="text-sm font-bold text-yellow-900 text-center">
@@ -226,9 +234,9 @@ const ExitIntentPopupV2 = () => {
 
             <button
               onClick={() => setIsOpen(false)}
-              className="w-full text-sm text-muted-foreground hover:text-foreground underline transition-colors"
+              className="w-full text-sm text-muted-foreground hover:text-foreground underline transition-colors py-2"
             >
-              Não, vou arriscar perder minha marca
+              Não, quero deixar minha marca desprotegida
             </button>
           </div>
         </div>

@@ -7,7 +7,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { AlertCircle, MessageCircle, Shield } from "lucide-react";
+import { AlertCircle, MessageCircle, Shield, Users } from "lucide-react";
 
 const ExitIntentPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -152,6 +152,13 @@ const ExitIntentPopup = () => {
 
         {/* CONTEÚDO */}
         <div className="p-6 sm:p-8 space-y-6">
+          <div className="bg-blue-500/10 border border-blue-500/30 p-4 rounded-lg mb-4 flex items-center justify-center gap-2">
+            <Users className="w-5 h-5 text-blue-600 flex-shrink-0" />
+            <p className="text-sm sm:text-base text-foreground font-bold text-center">
+              <span className="text-blue-600">ALERTA:</span> 2 empresas estão consultando a marca da sua empresa agora
+            </p>
+          </div>
+
           <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg mb-4">
             <p className="text-sm sm:text-base text-foreground font-bold text-center">
               <span className="text-red-600">URGENTE:</span> Não deixe sua marca desprotegida. Outras empresas podem registrá-la antes de você!
@@ -198,14 +205,12 @@ const ExitIntentPopup = () => {
               Falar com Especialista no WhatsApp
             </Button>
 
-            <Button
-              variant="outline"
-              size="lg"
-              className="w-full text-sm sm:text-base"
+            <button
               onClick={() => setIsOpen(false)}
+              className="w-full text-sm text-muted-foreground hover:text-foreground underline transition-colors py-2"
             >
-              Continuar Navegando
-            </Button>
+              Não, quero deixar minha marca desprotegida
+            </button>
           </div>
 
           <p className="text-xs text-center text-muted-foreground">
